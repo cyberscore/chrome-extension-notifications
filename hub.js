@@ -29,7 +29,9 @@ var loadNotifications = function (username) {
       document.querySelector('ul').innerHTML = "";
 
       var notifications = JSON.parse(xhr.response)['_embedded']['notifications']
-          notifications.forEach(appendNotification)
+
+      chrome.browserAction.setBadgeText({ text: notifications.length.toString() })
+      notifications.forEach(appendNotification)
     }
   }
   xhr.send();
