@@ -1,0 +1,17 @@
+{ "manifest_version": 2
+, "name": "Cyberscore Notifications"
+, "description": "This extension demonstrates a browser action."
+, "version": "1.0"
+
+, "permissions": [ "notifications"
+                 , "http://api.dev/"
+                 , "http://cs-api.herokuapp.com/"
+                 , "https://secure.flickr.com/"
+                 ]
+
+, "browser_action": { "default_icon": "icon.png"
+                    , "default_popup": "popup.html"
+                    }
+
+, "options_page": "options.html"
+}
