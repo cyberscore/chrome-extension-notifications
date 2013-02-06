@@ -1,7 +1,8 @@
 { "manifest_version": 2
+
 , "name": "Cyberscore Notifications"
-, "description": "This extension demonstrates a browser action."
-, "version": "1.0"
+, "description": "Keep up to date with your notifications with this handy extension."
+, "version": "0.1.0"
 
 , "permissions": [ "notifications"
                  , "http://api.dev/"
