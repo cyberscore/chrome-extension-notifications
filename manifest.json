@@ -22,5 +22,9 @@
                     , "default_popup": "popup.html"
                     }
 
+, "background": { "scripts":    ["js/eventPage.js"]
+                , "persistent": false
+                }
+
 , "options_page": "options.html"
 }
