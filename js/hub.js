@@ -1,11 +1,12 @@
 var appendNotification = function (notification) {
   var li = document.createElement('li')
   var date = new Date(Date.parse(notification.timestamp))
-  var link = "http://cyberscore.me.uk/chart/66354"
+  var game_link = notification["_links"]["cs:game"]['_href']
+  var chart_link = notification["_links"]["cs:game"]['_href']
 
-  li.innerHTML = "[" + date + "]"
-               + " <strong>" + notification.game + "</strong> &mdash; "
-               + "<a href='" + link + "'>" + notification.chart + "</a>";
+  li.innerHTML = "[" + date.getUTCDate() + "]"
+               + "<a href='" + game_link + "'><strong>" + notification.game + "</strong></a> &mdash; "
+               + "<a href='" + chart_link + "'>" + notification.chart + "</a>";
 
   document.querySelector('ul').appendChild(li);
 }
@@ -40,5 +41,7 @@ var loadNotifications = function (username) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  Handlebars.partials = Handlebars.templates
+  document.body.innerHTML = Handlebars.templates.layout({ game_name: "texting"})
   loadNotifications();
 })

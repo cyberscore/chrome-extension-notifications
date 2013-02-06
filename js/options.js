@@ -40,6 +40,8 @@ function load_options () {
   if (!username) return;
 
   document.querySelector("input[name=username]").value = username;
+
+  chrome.runtime.getBackgroundPage();
 }
 
 function store_options () {
@@ -53,7 +55,9 @@ function store_options () {
     setTimeout(function() {
       status.innerHTML = "";
     }, 750);
+
+    return false;
 }
 
 document.addEventListener('DOMContentLoaded', load_options);
-document.querySelector("input[type=submit]").addEventListener('click', store_options);
+document.querySelector("button[type=submit]").addEventListener('click', store_options);
