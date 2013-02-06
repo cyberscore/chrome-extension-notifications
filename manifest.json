@@ -4,6 +4,11 @@
 , "description": "Keep up to date with your notifications with this handy extension."
 , "version": "0.1.0"
 
+, "icons": { "16":  "images/icon16.png"
+           , "48":  "images/icon48.png"
+           , "128": "images/icon128.png"
+           }
+
 , "permissions": [ "alarms"
                  , "background"
                  , "notifications"
@@ -11,7 +16,9 @@
                  , "http://cs-api.herokuapp.com/"
                  ]
 
-, "browser_action": { "default_icon": "icon.png"
+, "browser_action": { "default_icon": { "19": "images/icon.png"
+                                      , "38": "images/icon.png"
+                                      }
                     , "default_popup": "popup.html"
                     }
 
