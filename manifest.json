@@ -4,10 +4,11 @@
 , "description": "Keep up to date with your notifications with this handy extension."
 , "version": "0.1.0"
 
-, "permissions": [ "notifications"
+, "permissions": [ "alarms"
+                 , "background"
+                 , "notifications"
                  , "http://api.dev/"
                  , "http://cs-api.herokuapp.com/"
-                 , "https://secure.flickr.com/"
                  ]
 
 , "browser_action": { "default_icon": "icon.png"
