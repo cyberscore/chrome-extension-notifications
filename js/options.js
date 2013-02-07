@@ -1,62 +1,34 @@
-// Save this script as `options.js`
-//
-// // Saves options to localStorage.
-// function save_options() {
-//   var select = document.getElementById("color");
-//   var color = select.children[select.selectedIndex].value;
-//   localStorage["favorite_color"] = color;
-//
-//   // Update status to let user know options were saved.
-//   var status = document.getElementById("status");
-//   status.innerHTML = "Options Saved.";
-//   setTimeout(function() {
-//     status.innerHTML = "";
-//   }, 750);
-// }
-//
-// // Restores select box state to saved value from localStorage.
-// function restore_options() {
-//   var favorite = localStorage["favorite_color"];
-//   if (!favorite) {
-//     return;
-//   }
-//
-//   var select = document.getElementById("color");
-//   for (var i = 0; i < select.children.length; i++) {
-//     var child = select.children[i];
-//     if (child.value == favorite) {
-//       child.selected = "true";
-//       break;
-//     }
-//   }
-// }
-//
-// document.addEventListener('DOMContentLoaded', restore_options);
-// document.querySelector('#save').addEventListener('click', save_options);
-
-function load_options () {
-  var username = localStorage["username"];
-
-  if (!username) return;
-
-  document.querySelector("input[name=username]").value = username;
-
-  chrome.runtime.getBackgroundPage();
+// Calls the API to check if the credentials are correct
+function areCredentialsValid() {
+  return true;
 }
 
-function store_options () {
+function load_options() {
+  chrome.storage.sync.get(['username', 'password'], function (credentials) {
+    if (!credentials.username) return;
+
+    document.querySelector("input[name=username]").value = credentials.username;
+  });
+}
+
+var CyberscoreUser = Object.create({})
+
+function store_options() {
   var username = this.form.username.value;
 
-  localStorage.username = username;
+  chrome.storage.sync.set({
+    username: username
+  , password: ""
+  })
 
-    // Update status to let user know options were saved.
-    var status = document.getElementById("status");
-    status.innerHTML = "Options Saved.";
-    setTimeout(function() {
-      status.innerHTML = "";
-    }, 750);
+  chrome.extension.getBackgroundPage().fetchNotifications();
 
-    return false;
+  // Update status to let user know options were saved.
+  var status = document.getElementById("status");
+  status.innerHTML = "Options Saved.";
+  setTimeout(function() {
+    status.innerHTML = "";
+  }, 750);
 }
 
 document.addEventListener('DOMContentLoaded', load_options);

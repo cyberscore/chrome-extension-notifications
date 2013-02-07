@@ -2,9 +2,13 @@
   <div class="brand">
     Cyberscore Notifications
   </div>
-  Welcome, {{ username }}
+  Welcome, <strong>{{ username }}</strong>
 </header>
 
-<table>
+{{#if notifications }}
   {{> notifications }}
-</table>
+{{else }}
+  <div class="zero-notifications">
+    <h1>No notifications :C</h1>
+  </div>
+{{/if }}

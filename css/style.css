@@ -1,0 +1,51 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  min-width: 500px;
+  overflow-x: hidden;
+}
+
+img {
+  margin: 5px;
+  border: 2px solid black;
+  vertical-align: middle;
+  width: 75px;
+  height: 75px;
+}
+
+header {
+    color: white;
+    background: #3333AA;
+
+    padding: 1em;
+}
+
+.brand {
+    float: right;
+}
+
+<!-- -->
+.table-container {
+  margin: 1.6em;
+}
+
+table {
+  width: 100%;
+}
+
+tbody > tr:nth-child(n) {
+  background-color: #ddff77;
+}
+tbody > tr:nth-child(2n) {
+  background-color: #eeffcc;
+}
+
+thead, tfoot {
+  background-color: #333;
+  color: white;
+
+  text-align: center;
+}

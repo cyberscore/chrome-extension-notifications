@@ -10,6 +10,7 @@
            }
 
 , "permissions": [ "alarms"
+                 , "storage"
                  , "background"
                  , "notifications"
                  , "http://api.dev/"
@@ -22,7 +23,7 @@
                     , "default_popup": "popup.html"
                     }
 
-, "background": { "scripts":    ["js/eventPage.js"]
+, "background": { "scripts":    ["js/eventPage.js", "js/lodash.custom.js"]
                 , "persistent": false
                 }
 
