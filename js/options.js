@@ -8,28 +8,38 @@ function load_options() {
     if (!credentials.username) return;
 
     document.querySelector("input[name=username]").value = credentials.username;
+    document.querySelector("input[name=password]").value = credentials.password;
   });
 }
 
 var CyberscoreUser = Object.create({})
 
 function store_options() {
-  var username = this.form.username.value;
+  var form     = document.forms.credentials;
+  var username = form.username.value;
+  var password = form.password.value;
 
   chrome.storage.sync.set({
     username: username
-  , password: ""
-  })
-
-  chrome.extension.getBackgroundPage().fetchNotifications();
-
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
-  status.innerHTML = "Options Saved.";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 750);
+  , password: password
+  }, function () { show_in_status() })
 }
 
+function show_in_status() {
+  var status_element = document.getElementById('status');
+
+  status_element.style.visibility = 'visible';
+
+  setTimeout(function () {
+    status_element.style.visibility = 'hidden';
+  }, 750)
+}
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  if (namespace == "local") return;
+
+  chrome.extension.getBackgroundPage().fetchNotifications();
+})
+
 document.addEventListener('DOMContentLoaded', load_options);
-document.querySelector("button[type=submit]").addEventListener('click', store_options);
+document.querySelector("button#save").addEventListener('click', store_options);

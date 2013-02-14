@@ -1,21 +1,8 @@
 <html>
 <head>
-  <title>My Test Extension Options</title>
+  <title>Options : Cyberscore Notifications</title>
   <link href="css/reset.css" rel="stylesheet" type="text/css">
-  <style>
-    body {
-      min-width: 400px;
-      width: 80%;
-      margin: 1.6em auto;
-
-      text-align: center;
-    }
-    form        { margin: 0 auto; margin-top: 1.6em; width: 300px; }
-    form p      { height: 2em; line-height: 2em; }
-    form input  { height: 2em; float: right; }
-    form button { float: right; }
-
-  </style>
+  <link href="css/options.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -23,23 +10,20 @@
     <h1>Please set your credentials</h1>
   </header>
 
-  <form>
+  <form id="credentials">
     <p>
       <label for="username">Username</label>
-      <input type="text" name="username" placeholder="cyberscore username">
+      <input type="text" name="username" placeholder="PackAttack">
     </p>
     <p>
       <label for="password">Password</label>
-      <input type="password" name="password" placeholder="cyberscore password">
-    </p>
-    <p>
-      <button type="submit">save</button>
+      <input type="password" name="password" placeholder="Required">
     </p>
   </form>
+    <button id="save">save</button>
 
-  <footer>
-    <div id="status">
-    </div>
+  <footer id="status">
+    Credentials saved.
   </footer>
 
   <script src="js/options.js"></script>

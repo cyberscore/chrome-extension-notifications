@@ -1,0 +1,24 @@
+    body {
+      min-width: 400px;
+      width: 80%;
+      margin: 1.6em auto;
+    
+      text-align: center;
+    }
+    
+    footer {
+      position: absolute;
+      bottom: 2em;
+    
+      width: 80%;
+      margin: 0 auto;
+    
+      background-color: #99ffcc;
+    
+      text-align: center;
+      visibility: hidden;
+    }
+    
+    form        { margin: 0 auto; margin-top: 1.6em; width: 300px; }
+    form p      { height: 2em; line-height: 2em; }
+    form input  { height: 2em; float: right; }
