@@ -1,5 +1,9 @@
 var api_root = "http://api.dev/users/"
 
+function encodeBase64(username, password) {
+  return btoa(username+':'+password);
+}
+
 function urlForUserNotifications(username) {
   return api_root + username + "/notifications"
 }
@@ -25,9 +29,12 @@ function processNotifications(notifications) {
 function storeNotifications (notifications) {
   console.log("=>", "storeNotifications")
 
-  // chrome.storage.local.set({ 'notifications': notifications }, function (data) {
-  //   console.log("stored", data)
-  // })
+
+  var grouped_by_type = _.groupBy(notifications, 'type')
+  chrome.storage.local.set({ 'notifications': grouped_by_type }, function (data) {
+    console.log("stored", data)
+  })
+
   localStorage.setItem('notifications', JSON.stringify(notifications))
 }
 
@@ -50,14 +57,16 @@ function updateBadge(counter, isUnread) {
 function fetchNotifications() {
   console.log("=>", "fetchNotifications")
 
-  chrome.storage.sync.get('username', function (data) {
+  chrome.storage.sync.get(['username','password'], function (data) {
     var username   = data.username;
-    var api_string = urlForUserNotifications(username)
+    var password   = data.password;
+    var api_string = urlForUserNotifications(username);
 
-    if (username == "") { console.log("Username not found") ; return; }
+    if (username == "") { console.log("Username not found"); return; }
+    if (password == "") { console.log("Password not found"); return; }
 
     xhr = new XMLHttpRequest();
-    xhr.open("GET", api_string, true);
+    xhr.open("GET", api_string, true, username, password);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) {
         var notifications = JSON.parse(xhr.response)['_embedded']['notifications'];
@@ -77,6 +86,7 @@ function updateNotifications() {
   if (notifications) {
     updateBadge(notifications.length);
   }
+
   fetchNotifications();
 }
 

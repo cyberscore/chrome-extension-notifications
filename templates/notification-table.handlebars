@@ -1,0 +1,21 @@
+<div class="table-container">
+<table>
+    <caption>{{fullType this }}</caption>
+    <thead>
+        <tr>
+            <td>Date</td>
+            <td>Game</td>
+            <td>Chart</td>
+        </tr>
+    </thead>
+    <tbody>
+      {{#each this }}
+        <tr>
+            <td>{{formatDate timestamp }}</td>
+            <td><a href="{{ game.link }}">{{ game.name }}</a></td>
+            <td><a href="{{ chart.link }}">{{ chart.name }}<a></td>
+        </tr>
+      {{/each }}
+    </tbody>
+</table>
+</div>

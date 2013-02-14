@@ -5,7 +5,7 @@
             <td>Date</td>
             <td>Game</td>
             <td>Chart</td>
-            <td></td>
+            <td>type</td>
         </tr>
     </thead>
     <tfoot>
@@ -13,16 +13,32 @@
             <td>Date</td>
             <td>Game</td>
             <td>Chart</td>
-            <td></td>
+            <td>type</td>
         </tr>
     </tfoot>
     <tbody>
-      {{#each notifications }}
+      {{#each notifications.ygb }}
         <tr>
             <td>{{formatDate timestamp }}</td>
             <td><a href="{{ game.link }}">{{ game.name }}</a></td>
             <td><a href="{{ chart.link }}">{{ chart.name }}<a></td>
-            <td><button>:)</button></td>
+            <td>{{fullType type }}</td>
+        </tr>
+      {{/each }}
+      {{#each notifications.proof_refused }}
+        <tr>
+            <td>{{formatDate timestamp }}</td>
+            <td><a href="{{ game.link }}">{{ game.name }}</a></td>
+            <td><a href="{{ chart.link }}">{{ chart.name }}<a></td>
+            <td>{{ type }}</td>
+        </tr>
+      {{/each }}
+      {{#each notifications.rec_approved }}
+        <tr>
+            <td>{{formatDate timestamp }}</td>
+            <td><a href="{{ game.link }}">{{ game.name }}</a></td>
+            <td><a href="{{ chart.link }}">{{ chart.name }}<a></td>
+            <td>{{ type }}</td>
         </tr>
       {{/each }}
     </tbody>
