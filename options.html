@@ -1,29 +1,43 @@
 <html>
 <head>
   <title>Options : Cyberscore Notifications</title>
-  <link href="css/reset.css" rel="stylesheet" type="text/css">
+  <link href="css/chrome-bootstrap.css" rel="stylesheet" type="text/css">
   <link href="css/options.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
-  <header>
-    <h1>Please set your credentials</h1>
-  </header>
+<body class="frame">
 
-  <form id="credentials">
-    <p>
-      <label for="username">Username</label>
-      <input type="text" name="username" placeholder="PackAttack">
-    </p>
-    <p>
-      <label for="password">Password</label>
-      <input type="password" name="password" placeholder="Required">
-    </p>
-  </form>
-    <button id="save">save</button>
+  <div class="navigation">
+    <h1><a href="#">Cyberscore Notifications</a></h1>
+
+  </div>
+
+  <div class="mainview view">
+    <div class="forms selected">
+      <header style="position: relative;">
+          <h1>Enter your Cyberscore login below</h1>
+      </header>
+
+      <div class="content">
+        <form id="credentials">
+          <p>
+            <label for="username">Username</label>
+            <input type="text" name="username" placeholder="PackAttack">
+          </p>
+          <p>
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Required">
+          </p>
+        </form>
+      </div>
+
+      <button id="save">save</button>
+    </div>
+  </div>
+
 
   <footer id="status">
-    Credentials saved.
+    > credentials saved <
   </footer>
 
   <script src="js/options.js"></script>
