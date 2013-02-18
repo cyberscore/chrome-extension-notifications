@@ -3,6 +3,7 @@
     <caption>{{fullType this }}</caption>
     <thead>
         <tr>
+            <td></td>
             <td>Date</td>
             <td>Game</td>
             <td>Chart</td>
@@ -10,10 +11,11 @@
     </thead>
     <tbody>
       {{#each this }}
-        <tr>
+        <tr {{#if unread }}class="unread"{{/if }}>
+            <td><input type="checkbox"></td>
             <td>{{formatDate timestamp }}</td>
-            <td><a href="{{ game.link }}">{{ game.name }}</a></td>
-            <td><a href="{{ chart.link }}">{{ chart.name }}<a></td>
+            <td><a target="_blank" href="{{ game.link }}">{{ game.name }}</a></td>
+            <td><a target="_blank" href="{{ chart.link }}">{{ chart.name }}</a></td>
         </tr>
       {{/each }}
     </tbody>
