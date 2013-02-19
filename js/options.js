@@ -38,7 +38,7 @@ function show_in_status() {
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   if (namespace == "local") return;
 
-  chrome.extension.getBackgroundPage().fetchNotifications();
+  chrome.extension.getBackgroundPage().refreshNotifications();
 })
 
 document.addEventListener('DOMContentLoaded', load_options);

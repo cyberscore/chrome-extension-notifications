@@ -1,17 +1,25 @@
 <header>
   <div class="brand">
-    <a href="http://cyberscore.me.uk" target="_blank">Cyberscore Notifications</a>
+    Cyberscore Notifications
   </div>
   Welcome, <strong>{{ username }}</strong>
 </header>
 
-{{#if total }}
-{{else }}
-  <div class="zero-notifications">
-    <h1>No notifications :C</h1>
-  </div>
-{{/if }}
+<div class="table-container">
+  <section class="toolbar">
+    <button><i class="icon-bookmark icon-2x"></i></button>
+    <button><i class="icon-bookmark-empty icon-2x"></i></button>
+    <button class="btn"><i class="icon-trash icon-2x"></i></button>
+  </section>
 
-{{#each notifications }}
-  {{> notification-table }}
-{{/each }}
+  {{#if total }}
+  {{else }}
+    <div class="zero-notifications">
+      <h1>No notifications :C</h1>
+    </div>
+  {{/if }}
+
+  {{#each notifications }}
+    {{> notification-table }}
+  {{/each }}
+</div>

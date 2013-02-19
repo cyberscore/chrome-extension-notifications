@@ -2,6 +2,9 @@ Handlebars.partials = Handlebars.templates;
 Handlebars.registerHelper('formatDate', function (date) {
   return moment(date).format('DD MMM')
 })
+Handlebars.registerHelper('type', function (type) {
+  return type[0].type;
+})
 Handlebars.registerHelper('fullType', function (type) {
   var types = { ygb: 'You Got Beat'
               , proof_refused: 'Proof Refused'
@@ -9,6 +12,9 @@ Handlebars.registerHelper('fullType', function (type) {
               };
 
   return types[type[0].type];
+})
+Handlebars.registerHelper('isUnread', function (status) {
+  return (status ? 'unread' : 'read');
 })
 
 function checkForCredentials() {
@@ -22,14 +28,9 @@ function checkForCredentials() {
 
 function openOptionsPage() {
   console.warn("credentials not found.");
-
   window.close();
-  localStorage.clear(); console.log("localStorage cleared.");
+  chrome.storage.local.clear();
   chrome.tabs.create({ url: 'options.html' })
-}
-
-function getNotifications() {
-  return JSON.parse(localStorage.getItem('notifications'));
 }
 
 function displayNotifications() {
@@ -38,18 +39,37 @@ function displayNotifications() {
 
     chrome.storage.local.get('notifications', function (data) {
       var total = _.compose(String,_.size,_.flatten,_.values)(data.notifications)
-      chrome.browserAction.setBadgeText({ text: total })
 
       document.body.innerHTML = Handlebars.templates.layout({
         username:      username
       , notifications: data.notifications
       , total:         total
       })
+
+      addClickListeners();
+    })
+  })
+}
+
+function addClickListeners() {
+  [].forEach.call(document.querySelectorAll('thead input'), function (e) {
+    e.addEventListener('click', function (click) {
+      var global = this;
+      var type = this.parentNode.parentNode.parentNode.parentNode.id;
+
+      [].forEach.call(document.querySelectorAll('#' + type + ' tbody input[type=checkbox]'), function (checkbox) {
+        checkbox.checked = global.checked;
+      })
+
     })
   })
 }
 
 
+// HOOKS
+
+
 document.addEventListener('DOMContentLoaded', function () {
   checkForCredentials();
-})
+});
+

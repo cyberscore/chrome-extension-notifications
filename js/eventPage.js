@@ -1,5 +1,9 @@
 var api_root = "http://api.dev/users/"
 
+
+// HELPERS
+
+
 function encodeBase64(username, password) {
   return btoa(username+':'+password);
 }
@@ -7,6 +11,10 @@ function encodeBase64(username, password) {
 function urlForUserNotifications(username) {
   return api_root + username + "/notifications"
 }
+
+
+// CORE
+
 
 function processNotifications(notifications) {
   var result = _.map(notifications, function (elem) {
@@ -34,28 +42,40 @@ function storeNotifications (notifications) {
   chrome.storage.local.set({ 'notifications': grouped_by_type }, function (data) {
     console.log("stored", data)
   })
-
-  localStorage.setItem('notifications', JSON.stringify(notifications))
 }
 
-function updateBadge(counter, isUnread) {
-  console.log("=>", "updateBadge")
-
-  var unreadString = String(counter)
-
-  if (isUnread) {
-    console.log("=>", "unread")
-    chrome.browserAction.setBadgeBackgroundColor({ color: [255,0,0,255] })
-    chrome.browserAction.setBadgeText({ text: unreadString })
-    return;
+function refreshBadge() {
+  function displayUnreadCount(count) {
+    chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0,0, 255] })
+    chrome.browserAction.setBadgeText({ text: String(count) })
+  }
+  function displayTotalCount(count) {
+    chrome.browserAction.setBadgeBackgroundColor({ color: [200, 200,200, 255] })
+    chrome.browserAction.setBadgeText({ text: String(count) })
   }
 
-  chrome.browserAction.setBadgeBackgroundColor({ color: [200,200,200,255] })
-  chrome.browserAction.setBadgeText({ text: unreadString })
+  chrome.storage.local.get('notifications', function (data) {
+    var counts = _.countBy(_.flatten(_.values(data.notifications)), 'unread');
+        counts.true = counts.true || 0;
+
+    if (counts.true > 0) {
+      displayUnreadCount(counts.true);
+    } else {
+      displayTotalCount(counts.true + counts.false)
+    }
+  })
+}
+function refreshPopup() {
+  var popup = chrome.extension.getViews({ type: 'popup' })[0]
+
+  if (popup == undefined) return;
+
+  popup.displayNotifications();
 }
 
-function fetchNotifications() {
-  console.log("=>", "fetchNotifications")
+
+function callCyberscoreAPI() {
+  console.log("=>", "callCyberscoreAPI")
 
   chrome.storage.sync.get(['username','password'], function (data) {
     var username   = data.username;
@@ -73,30 +93,40 @@ function fetchNotifications() {
 
         notifications = processNotifications(notifications);
         storeNotifications(notifications);
-        updateBadge(notifications.length);
       }
     }
-    xhr.send();
+    console.log("xhr", xhr.send())
   })
 }
 
-function updateNotifications() {
-  var notifications = JSON.parse(localStorage.getItem('notifications'));
+function refreshUI() {
+  refreshBadge();
+  refreshPopup();
+}
 
-  if (notifications) {
-    updateBadge(notifications.length);
-  }
-
-  fetchNotifications();
+function refreshNotifications() {
+  refreshUI();
+  callCyberscoreAPI();
 }
 
 
+// HOOKS
+
+
 chrome.runtime.onInstalled.addListener(function () {
-  updateNotifications();
+  refreshNotifications();
   chrome.alarms.create("refresh", { periodInMinutes: 5 });
-});
+})
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  if (namespace == "sync") return;
+
+  refreshUI();
+
+  console.log("onChanged", changes)
+})
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
-  console.log("listener", "onAlarm")
-  fetchNotifications();
+  console.log("onAlarm")
+  refreshNotifications();
 })
