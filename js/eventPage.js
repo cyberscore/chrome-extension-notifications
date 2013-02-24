@@ -101,7 +101,6 @@ function callCyberscoreAPI() {
 
 function refreshUI() {
   refreshBadge();
-  refreshPopup();
 }
 
 function refreshNotifications() {
