@@ -2,7 +2,7 @@
 
 * Each type of notification gets their own table.
 * Properly deals with authentication (API now requires basic auth for notifications).
-* Using chrome-bootstrap for options page.
+* Using [chrome-bootstrap](https://github.com/roykolak/chrome-bootstrap) for options page.
 
 # 0.1.0 / 2013-02-xx
 
