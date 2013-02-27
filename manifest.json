@@ -24,7 +24,7 @@
                     }
 
 , "background": { "scripts":    [ "js/eventPage.js"
-                                , "js/lodash.custom.js"
+                                , "js/lodash.custom.min.js"
                                 ]
                 , "persistent": false
                 }
