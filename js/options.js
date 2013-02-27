@@ -3,12 +3,16 @@ function areCredentialsValid() {
   return true;
 }
 
+function setInputValues(username, password) {
+  document.querySelector("input[name=username]").value = username;
+  document.querySelector("input[name=password]").value = password;
+}
+
 function load_options() {
   chrome.storage.sync.get(['username', 'password'], function (credentials) {
     if (!credentials.username) return;
 
-    document.querySelector("input[name=username]").value = credentials.username;
-    document.querySelector("input[name=password]").value = credentials.password;
+    setInputValues(credentials.username, credentials.password)
   });
 }
 
@@ -35,6 +39,14 @@ function show_in_status() {
   }, 750)
 }
 
+function clear_options() {
+  chrome.storage.sync.clear()
+  chrome.storage.local.clear()
+  chrome.extension.getBackgroundPage().refreshUI()
+
+  setInputValues("","")
+}
+
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   if (namespace == "local") return;
 
@@ -42,4 +54,5 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 })
 
 document.addEventListener('DOMContentLoaded', load_options);
-document.querySelector("button#save").addEventListener('click', store_options);
+document.querySelector("#save").addEventListener('click', store_options);
+document.querySelector("#clear").addEventListener('click', clear_options)
