@@ -13,6 +13,12 @@ function urlForUserNotifications(username) {
 }
 
 
+// IDE
+
+
+
+
+
 // CORE
 
 
@@ -20,6 +26,7 @@ function processNotifications(notifications) {
   var result = _.map(notifications, function (elem) {
     var notification = {
       type:      elem['type']
+    , url:       elem['_links']['self']['href']
     , unread:    elem['unread']
     , timestamp: Date.parse(elem['timestamp'])
     , game:      { name: elem['game']
@@ -108,11 +115,37 @@ function refreshNotifications() {
   callCyberscoreAPI();
 }
 
+// API interaction
+
+function updateNotificationStatus(notification_url, status) {
+  chrome.storage.sync.get(['username','password'], function (data) {
+
+    var username   = data.username;
+    var password   = data.password;
+    var api_string = "http://api.dev" + notification_url;
+
+    if (username == "") { console.log("Username not found"); return; }
+    if (password == "") { console.log("Password not found"); return; }
+
+    var params = 'unread=' + encodeURIComponent(status)
+
+    xhr = new XMLHttpRequest();
+    xhr.open("POST", api_string, true, username, password);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    console.log("xhr", xhr.send(params))
+  })
+}
 
 // HOOKS
 
 
 chrome.runtime.onInstalled.addListener(function () {
+  chrome.storage.sync.get(['username', 'password'], function (data) {
+    if (!data.username && !data.password) {
+      chrome.tabs.create({ url: 'options.html' })
+    }
+  })
+
   refreshNotifications();
   chrome.alarms.create("refresh", { periodInMinutes: 5 });
 })

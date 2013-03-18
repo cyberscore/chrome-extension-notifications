@@ -2,7 +2,7 @@
     <caption>{{fullType this }}</caption>
     <thead>
         <tr>
-            <td><input type="checkbox"></td>
+            <td><input type="checkbox" data-notification-type="{{type this }}"></td>
             <td>Date</td>
             <td>Game</td>
             <td>Chart</td>
@@ -11,7 +11,7 @@
     <tbody>
       {{#each this }}
         <tr {{#if unread }}class="unread"{{/if }}>
-            <td><input type="checkbox"></td>
+            <td><input type="checkbox" data-notification-url="{{ url }}" data-notification-type="{{ this.type }}"></td>
             <td>{{formatDate timestamp }}</td>
             <td><a target="_blank" href="{{ game.link }}">{{ game.name }}</a></td>
             <td><a target="_blank" href="{{ chart.link }}">{{ chart.name }}</a></td>

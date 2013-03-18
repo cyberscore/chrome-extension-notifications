@@ -27,14 +27,9 @@ header {
     float: right;
 }
 
-<!-- -->
-
-.toolbar {
-  height: 3em;
-  line-height: 3em;
-  background-color: yellow;
-}
-
+/*
+ *
+ */
 .table-container {
   margin: 1.6em;
 }
@@ -58,5 +53,41 @@ tbody tr:nth-child(2n) {
   background-color: #eeeeee;
 }
 
-tr.unread { background-color: rgba(0,255,0,0.4); }
+tbody tr.unread { background-color: rgba(0,255,0,0.4); }
 td { padding: 0.2em; }
+
+/*
+ *
+ */
+
+.toolbar {
+  /*  As of August 2012, only supported in Chrome 21+ */
+  display: -webkit-flex;
+  display: flex;
+
+  text-align: center;
+}
+.toolbar a.option {
+  -webkit-flex: 1;
+
+  padding-top:    .7em;
+  padding-bottom: .7em;
+
+  margin: 0 1px;
+
+  background: #EEF;
+
+  text-decoration: none;
+}
+
+.toolbar a.option:hover {
+  background-color: #3333AA;
+
+  color: #EEF;
+}
+
+.toolbar a.option:active {
+  box-shadow: inset 0px 0px 5px 5px #222299;
+
+  color: white;
+}

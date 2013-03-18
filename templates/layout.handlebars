@@ -5,13 +5,13 @@
   Welcome, <strong>{{ username }}</strong>
 </header>
 
-<div class="table-container">
-  <section class="toolbar">
-    <button><i class="icon-bookmark icon-2x"></i></button>
-    <button><i class="icon-bookmark-empty icon-2x"></i></button>
-    <button class="btn"><i class="icon-trash icon-2x"></i></button>
-  </section>
+<section class="toolbar">
+    <a class="option mark-read" href="#"><i class="icon-bookmark"></i> mark as read</a>
+    <a class="option mark-unread" href="#"><i class="icon-bookmark-empty"></i> mark as unread</a>
+    <a class="option delete" href="#"><i class="icon-trash"></i> delete</a>
+</section>
 
+<section class="table-container">
   {{#if total }}
   {{else }}
     <div class="zero-notifications">
@@ -22,4 +22,10 @@
   {{#each notifications }}
     {{> notification-table }}
   {{/each }}
-</div>
+</section>
+
+<section class="toolbar">
+    <a class="option mark-read" href="#"><i class="icon-bookmark"></i> mark as read</a>
+    <a class="option mark-unread" href="#"><i class="icon-bookmark-empty"></i> mark as unread</a>
+    <a class="option delete" href="#"><i class="icon-trash"></i> delete</a>
+</section>
