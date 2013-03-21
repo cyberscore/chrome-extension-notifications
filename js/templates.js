@@ -38,7 +38,7 @@ function program5(depth0,data) {
   stack2 = {};
   stack1 = helpers.each.call(depth0, stack1, {hash:stack2,inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</section>\n\n<section class=\"toolbar\">\n    <a class=\"option mark-read\" href=\"#\"><i class=\"icon-bookmark\"></i> mark as read</a>\n    <a class=\"option mark-unread\" href=\"#\"><i class=\"icon-bookmark-empty\"></i> mark as unread</a>\n    <a class=\"option delete\" href=\"#\"><i class=\"icon-trash\"></i> delete</a>\n</section>\n";
+  buffer += "\n</section>\n\n<section class=\"toolbar\">\n    <a class=\"option mark-read\" href=\"#\"><i class=\"icon-bookmark\"></i> mark as read</a>\n    <a class=\"option mark-unread\" href=\"#\"><i class=\"icon-bookmark-empty\"></i> mark as unread</a>\n    <a class=\"option delete\" href=\"#\"><i class=\"icon-trash\"></i> delete</a>\n</section>\n\n<footer>\n  &nbsp;\n</footer>\n";
   return buffer;});
 templates['notification-table'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers; data = data || {};
