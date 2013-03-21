@@ -143,7 +143,7 @@ function addHeaderListeners() {
 
 function addClickListeners() {
   addToolbarListeners();
-  addEventListeners();
+  addHeaderListeners();
 }
 
 // HOOKS
