@@ -24,11 +24,11 @@ function program5(depth0,data) {
   buffer += "\n  ";
   return buffer;}
 
-  buffer += "<header>\n  <div class=\"brand\">\n    Cyberscore Notifications\n  </div>\n  Welcome, <strong>";
+  buffer += "<section class=\"refresh-alert\">\n  New notifications available\n\n  <div class=\"buttons\">\n    <span class=\"reload\">\n      <i class=\"icon-refresh\"></i>\n    </span><span class=\"close\">\n      <i class=\"icon-remove-sign\"></i>\n    </span>\n  </div>\n</section>\n\n<header>\n  <div class=\"brand\">\n    Cyberscore Notifications\n  </div>\n  Welcome, <strong>";
   foundHelper = helpers.username;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1) + "</strong>\n</header>\n\n<section class=\"toolbar\">\n    <a class=\"option mark-read\" href=\"#\"><i class=\"icon-bookmark\"></i> mark as read</a>\n    <a class=\"option mark-unread\" href=\"#\"><i class=\"icon-bookmark-empty\"></i> mark as unread</a>\n    <a class=\"option delete\" href=\"#\"><i class=\"icon-trash\"></i> delete</a>\n</section>\n\n<section class=\"table-container\">\n  ";
+  buffer += escapeExpression(stack1) + "</strong>\n</header>\n\n<section class=\"toolbar\">\n  <a class=\"option mark-read\" href=\"#\"><i class=\"icon-bookmark\"></i> mark as read</a>\n  <a class=\"option mark-unread\" href=\"#\"><i class=\"icon-bookmark-empty\"></i> mark as unread</a>\n  <a class=\"option delete\" href=\"#\"><i class=\"icon-trash\"></i> delete</a>\n</section>\n\n<section class=\"table-container\">\n  ";
   stack1 = depth0.total;
   stack2 = {};
   stack1 = helpers['if'].call(depth0, stack1, {hash:stack2,inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});

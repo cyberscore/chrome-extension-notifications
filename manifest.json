@@ -23,8 +23,10 @@
                     , "default_popup": "popup.html"
                     }
 
-, "background": { "scripts":    [ "js/eventPage.js"
-                                , "js/lodash.custom.min.js"
+, "background": { "scripts":    [ "js/lodash.custom.min.js"
+                                , "js/rsvp.min.js"
+                                , "js/background/promise.js"
+                                , "js/eventPage.js"
                                 ]
                 , "persistent": false
                 }

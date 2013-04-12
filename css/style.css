@@ -20,7 +20,10 @@ header {
     color: white;
     background: #3333AA;
 
-    padding: 1em;
+    height: 3em;
+    line-height: 3em;
+
+    padding: 0 1em;
 }
 
 .brand {
@@ -87,13 +90,71 @@ td { padding: 0.2em; }
 }
 
 .toolbar a.option:active {
-  box-shadow: inset 0px 0px 5px 5px #222299;
-
   color: white;
+  font-weight: bold;
 }
 
 footer {
   background-color: #3333AA;
 
   height: 1em;
+}
+
+.refresh-alert {
+  display: none;
+  background-color: yellow;
+
+  height:      3em;
+  line-height: 3em;
+
+  text-align:center;
+
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+
+  color: red;
+  font-weight: bolder;
+  font-family: Futura, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.refresh-alert button {
+  color: blue;
+}
+.refresh-alert button:active {
+  color: white;
+}
+.refresh-alert form {
+  display: inline-block;
+}
+
+.close:hover {
+  color: yellow;
+  background-color: red;
+}
+.close:active {
+  color: white;
+}
+
+.reload { color: blue; }
+
+.reload:hover {
+  color: yellow;
+  background-color: blue;
+}
+.reload:active {
+  color: white;
+}
+
+.buttons {
+  float: right;
+
+  margin-right: 1em;
+}
+
+.buttons span {
+  display: inline-block;
+
+  margin: 0;
+  width:  3em;
 }

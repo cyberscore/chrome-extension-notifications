@@ -1,9 +1,7 @@
 var api_root = "http://api.dev/users/"
 
-
+//
 // HELPERS
-
-
 function encodeBase64(username, password) {
   return btoa(username+':'+password);
 }
@@ -12,16 +10,9 @@ function urlForUserNotifications(username) {
   return api_root + username + "/notifications"
 }
 
-
-// IDE
-
-
-
-
-
+//
 // CORE
-
-
+//
 function processNotifications(notifications) {
   var result = _.map(notifications, function (elem) {
     var notification = {
@@ -49,6 +40,9 @@ function storeNotifications (notifications) {
   chrome.storage.local.set({ 'notifications': grouped_by_type }, function (data) {
     console.log("stored", data)
   })
+  chrome.storage.local.set({ 'id-map': _.groupBy(notifications, 'url') }, function (data) {
+    console.log("id-map#set", data)
+  })
 }
 
 function refreshBadge() {
@@ -72,14 +66,10 @@ function refreshBadge() {
     }
   })
 }
-function refreshPopup() {
-  var popup = chrome.extension.getViews({ type: 'popup' })[0]
 
-  if (popup == undefined) return;
-
-  popup.displayNotifications();
+function getPopupView() {
+  return chrome.extension.getViews({ type: 'popup' })[0]
 }
-
 
 function callCyberscoreAPI() {
   console.log("=>", "callCyberscoreAPI")
@@ -92,7 +82,7 @@ function callCyberscoreAPI() {
     if (username == "") { console.log("Username not found"); return; }
     if (password == "") { console.log("Password not found"); return; }
 
-    xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open("GET", api_string, true, username, password);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) {
@@ -108,6 +98,9 @@ function callCyberscoreAPI() {
 
 function refreshUI() {
   refreshBadge();
+
+  var popup = getPopupView();
+  if (popup != undefined) popup.showAlert();
 }
 
 function refreshNotifications() {
@@ -115,8 +108,9 @@ function refreshNotifications() {
   callCyberscoreAPI();
 }
 
+//
 // API interaction
-
+//
 function updateNotificationStatus(notification_url, status) {
   chrome.storage.sync.get(['username','password'], function (data) {
 
@@ -132,13 +126,41 @@ function updateNotificationStatus(notification_url, status) {
     xhr = new XMLHttpRequest();
     xhr.open("POST", api_string, true, username, password);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    console.log("xhr", xhr.send(params))
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        console.log(xhr.response);
+      }
+    };
+    xhr.send(params);
   })
 }
 
+function deleteNotification(notification_url) {
+  chrome.storage.sync.get(['username', 'password'], function (data) {
+    var username   = data.username;
+    var password   = data.password;
+    var api_string = "http://api.dev" + notification_url;
+
+    if (username == "") { console.log("Username not found"); return; }
+    if (password == "") { console.log("Password not found"); return; }
+
+    var params = 'unread=' + encodeURIComponent(status)
+
+    xhr = new XMLHttpRequest();
+    xhr.open("DELETE", api_string, true, username, password);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        console.log(xhr.response);
+      }
+    };
+    console.log("xhr", xhr.send(params));
+  })
+}
+
+//
 // HOOKS
-
-
+//
 chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.sync.get(['username', 'password'], function (data) {
     if (!data.username && !data.password) {
@@ -151,6 +173,7 @@ chrome.runtime.onInstalled.addListener(function () {
 })
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
+  debugger;
   if (namespace == "sync") return;
 
   refreshUI();

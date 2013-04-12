@@ -33,6 +33,10 @@ function openOptionsPage() {
   chrome.tabs.create({ url: 'options.html' })
 }
 
+function reloadPopup() {
+  window.location.reload();
+}
+
 function displayNotifications() {
   chrome.storage.sync.get('username',function (data) {
     var username = data.username;
@@ -66,17 +70,19 @@ function retrieveNotification(checkbox, callback) {
     var notifications = data['notifications'][type];
 
     var notification = _(notifications).find(function (elem) { return elem['url'] == href; });
-
-    callback(notification);
   })
+}
+
+function retrieveNotificationURL(checkbox) {
+  return checkbox.getAttribute('data-notification-url')
 }
 
 function selectedNotifications() {
   var urls = [];
   var nots = [];
 
-  [].forEach.call(document.querySelectorAll('tbody input:checked'), function (notification) {
-    nots.push(retrieveNotification(notification))
+  [].forEach.call(document.querySelectorAll('tbody input:checked'), function (checkbox) {
+    urls.push(retrieveNotificationURL(checkbox))
   })
 
   return urls;
@@ -84,6 +90,7 @@ function selectedNotifications() {
 
 
 function markAsRead() {
+  console.log("markAsRead");
   notifications = selectedNotifications();
 
   notifications.forEach(function (notification) {
@@ -93,6 +100,7 @@ function markAsRead() {
   })
 }
 function markAsUnread() {
+  console.log("markAsUnread");
   notifications = selectedNotifications();
 
   notifications.forEach(function (notification) {
@@ -100,13 +108,16 @@ function markAsUnread() {
       eventPage.updateNotificationStatus(notification, true)
     })
   })
-
-  displayNotifications()
 }
 function deleteNotification() {
+  console.log("deleteNotification");
   notifications = selectedNotifications();
 
-  console.log('delete', notifications)
+  notifications.forEach(function (notification) {
+    chrome.runtime.getBackgroundPage(function (eventPage) {
+      eventPage.deleteNotification(notification);
+    })
+  })
 }
 
 
@@ -144,12 +155,26 @@ function addHeaderListeners() {
 function addClickListeners() {
   addToolbarListeners();
   addHeaderListeners();
+
+  document.querySelector('.close').addEventListener('click', dismissAlert);
+  document.querySelector('.reload').addEventListener('click', reloadPopup);
 }
 
+//
+// ALERT BAR
+//
+function showAlert () {
+  var alert = document.querySelector('.refresh-alert');
+
+  alert.style.display = "block";
+}
+function dismissAlert () {
+  document.querySelector('.refresh-alert').style.display = "none";
+}
+
+//
 // HOOKS
-
-
+//
 document.addEventListener('DOMContentLoaded', function () {
   checkForCredentials();
 });
-
