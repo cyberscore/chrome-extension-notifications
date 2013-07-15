@@ -1,3 +1,10 @@
+# 0.3.0 / 2013-xx-xx
+
+* New toolbar to manage notifications
+* You can now mark notifications as read, unread, or delete them.
+* Visuak tweaks, including new footer
+* All new icons
+
 # 0.2.0 / 2013-02-15
 
 * Each type of notification gets their own table.

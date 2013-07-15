@@ -17,14 +17,18 @@
                  , "http://cs-api.herokuapp.com/"
                  ]
 
-, "browser_action": { "default_icon": { "19": "images/icon.png"
-                                      , "38": "images/icon.png"
+, "browser_action": { "default_icon": { "19": "images/icon19.png"
+                                      , "38": "images/icon48.png"
                                       }
+                    , "default_title": "Cyberscore Notifications"
                     , "default_popup": "popup.html"
                     }
 
-, "background": { "scripts":    [ "js/eventPage.js"
-                                , "js/lodash.custom.min.js"
+, "background": { "scripts":    [ "js/components/underscore/underscore-min.js"
+                                , "js/components/rsvp.js/browser/rsvp.min.js"
+                                , "js/background/promised_http.js"
+                                , "js/background/promised_storage.js"
+                                , "js/eventPage.js"
                                 ]
                 , "persistent": false
                 }
