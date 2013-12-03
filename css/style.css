@@ -18,13 +18,16 @@ img {
 
 header {
     color: white;
-    background: #3333AA;
+    background-color: rgb(73,142,251);
 
     padding: 1em;
 }
 
 .brand {
     float: right;
+
+    font-weight: bold;
+    color: rgb(246,221,0);
 }
 
 /*
@@ -47,8 +50,6 @@ thead, tfoot {
   color: white;
 }
 
-tbody tr:nth-child(n) {
-}
 tbody tr:nth-child(2n) {
   background-color: #eeeeee;
 }
@@ -78,22 +79,24 @@ td { padding: 0.2em; }
   background: #EEF;
 
   text-decoration: none;
+  color: rgb(73,142,251);
 }
 
 .toolbar a.option:hover {
-  background-color: #3333AA;
+  background-color: rgb(73,142,251);
 
   color: #EEF;
 }
 
 .toolbar a.option:active {
-  box-shadow: inset 0px 0px 5px 5px #222299;
+  box-shadow: inset 0px 0px 5px 5px rgb(70,139,248);
 
   color: white;
 }
 
 footer {
-  background-color: #3333AA;
+  background-color: rgb(73,142,251);
 
-  height: 1em;
+  min-height: 1em;
+  padding: 1em;
 }
