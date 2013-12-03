@@ -51,7 +51,7 @@ thead, tfoot {
 }
 
 tbody tr:nth-child(2n) {
-  background-color: #eeeeee;
+  background-color: #eef;
 }
 
 tbody tr.unread { background-color: rgba(0,255,0,0.4); }
